@@ -4,22 +4,24 @@ import socket
 host = socket.gethostname()
 port = 1234
 
-try:
-    # while True:
-    for x in range(0, 4):
-            s = socket.socket()
-            s.connect((host, port))
-            # Here will be deframing videos
-            s.send("hello world")
-            print s.recv(4096)
-            # End of deframing video
-            s.close()
-    # Send message to stop the server
+
+def send_message(message):
     s = socket.socket()
     s.connect((host, port))
-    s.send("stop")
+    s.send(message)
     print s.recv(4096)
     s.close()
 
-except socket.error:
-    print 'Server is not responding. Shutting down.'
+
+def split_frames():
+    try:
+        # while True:
+        for x in range(0, 4):
+            send_message("hello world")
+        # Send message to stop the server
+        send_message("stop")
+    except socket.error:
+        print 'Server is not responding. Shutting down.'
+
+if __name__ == '__main__':
+    split_frames()
