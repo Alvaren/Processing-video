@@ -9,7 +9,7 @@ def send_message(message):
     s = socket.socket()
     s.connect((host, port))
     s.send(message)
-    print s.recv(4096)
+    # print s.recv(4096)
     s.close()
 
 
