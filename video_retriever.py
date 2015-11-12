@@ -1,18 +1,17 @@
 # video_retriver.py
 import socket
 
-host = socket.gethostname()
-port = 1234
+host_out = socket.gethostname()
+port_out = 1233
+video_url = "My_Movie.avi"
 
 
-def test():
-    print "lol"
-    # video retriever
-    # import urllib
-    # test = urllib.FancyURLopener()
-    # test.retrieve("https://drive.google.com/open?id=0B4bL21Dzu8MwdkZMX0xNZGFyZVk", "testout.mp4")
-    # print "done"
+def send_message():
+    s = socket.socket()
+    s.connect((host_out, port_out))
+    s.send(video_url)
+    s.close()
 
 
 if __name__ == '__main__':
-    test()
+    send_message()
