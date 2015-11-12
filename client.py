@@ -8,8 +8,6 @@ host = socket.gethostname()
 port_in = 1233
 port_out = 1234
 
-video_url = ""
-
 
 def get_video_url():
     s = socket.socket()

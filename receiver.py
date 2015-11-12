@@ -1,4 +1,4 @@
-# server.py
+# receiver.py
 import socket
 
 import cv2
