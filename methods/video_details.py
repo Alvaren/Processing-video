@@ -28,8 +28,3 @@ def metadata_for(filename):
         print makePrintable(line, charset)
 
     return metadata
-
-
-pathname = "My_Movie.avi"
-meta = metadata_for(pathname)
-print meta

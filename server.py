@@ -1,6 +1,6 @@
 # server.py
 import socket
-
+from methods.video_processing import *
 import cv2
 import numpy as np
 
@@ -15,7 +15,7 @@ fgbg = cv2.createBackgroundSubtractorMOG2()
 
 
 def get_frames():
-    print "Received data. Starting to decode video."
+    print "Connecting with client. Starting to collect all frames."
     coll = []
     while True:
         c, addr = s.accept()
@@ -27,21 +27,23 @@ def get_frames():
             test = np.fromstring(data, dtype=np.uint8)
             coll.append(test)
             c.send('Received the message.')
+    print "All frames has been received."
     c.close()
     modify_frames(coll)
 
 
 def modify_frames(collection):
+    print "Starting to modify frames."
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
     for c in collection:
         frame = cv2.imdecode(c, 1)
-        fgmask = fgbg.apply(frame)
-        frame = cv2.cvtColor(fgmask, cv2.COLOR_GRAY2RGB)
+        frame = remove_background(frame)
         result, imgencode = cv2.imencode('.jpg', frame, encode_param)
         data = np.array(imgencode)
         data_to_send = data.tobytes()
         send_message(data_to_send)
     send_message("stop")
+    print "All frames has been modified. Stopping server."
 
 
 def send_message(message):
@@ -52,4 +54,5 @@ def send_message(message):
 
 
 if __name__ == '__main__':
+    print "Starting server"
     get_frames()
