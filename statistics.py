@@ -1,5 +1,6 @@
 # stastistics.py
 import socket
+
 from methods.video_details import *
 
 host = socket.gethostname()

@@ -3,7 +3,7 @@ import socket
 
 host_out = socket.gethostname()
 port_out = 1233
-video_url = "My_Movie.avi"
+video_url = "data/My_Movie.avi"
 
 
 def send_message():

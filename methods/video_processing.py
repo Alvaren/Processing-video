@@ -36,3 +36,7 @@ def remove_background(frame):
     # Add the background and the image
     frame = background + img1
     return frame
+
+
+def video_process(frame):
+    return background_subtractor_mog2(frame)

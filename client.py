@@ -40,10 +40,7 @@ def split_frames(video):
         while cap.isOpened():
             ret, frame = cap.read()
             if ret:
-                result, imgencode = cv2.imencode('.jpg', frame, encode_param)
-                data = numpy.array(imgencode)
-                data_to_send = data.tobytes()
-                send_message(data_to_send)
+                encode_frame(encode_param, frame)
             else:
                 break
         print "All frames has been sent. Closing client."
@@ -51,6 +48,13 @@ def split_frames(video):
         send_message("stop")
     except socket.error:
         print 'Server is not responding. Shutting down.'
+
+
+def encode_frame(encode_param, frame):
+    result, imgencode = cv2.imencode('.jpg', frame, encode_param)
+    data = numpy.array(imgencode)
+    data_to_send = data.tobytes()
+    send_message(data_to_send)
 
 
 if __name__ == '__main__':
