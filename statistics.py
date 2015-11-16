@@ -1,10 +1,8 @@
 # stastistics.py
-import socket
-import pygal
 
+from methods.settings import *
 from methods.video_details import *
 
-host = socket.gethostname()
 port_in = 1236
 videos = []
 categories = ['bitrate', 'fps']
@@ -13,7 +11,7 @@ categories = ['bitrate', 'fps']
 def get_video_url():
     print "Connecting with receiver and client to receiver video urls."
     s = socket.socket()
-    s.bind((host, port_in))
+    s.bind((HOST, port_in))
     s.listen(1)
     while True:
         c, addr = s.accept()

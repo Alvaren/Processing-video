@@ -1,19 +1,17 @@
 # receiver.py
-import socket
 
-import cv2
 import numpy as np
 
+from methods.settings import *
+
 s = socket.socket()
-host = socket.gethostname()
 port_in = 1235
 port_out = 1236
-s.bind((host, port_in))
+s.bind((HOST, port_in))
 s.listen(1)
 
-codec = cv2.VideoWriter_fourcc(*'XVID')
-video_path = 'data/test.avi'
-out = cv2.VideoWriter(video_path, codec, 30.0, (1920, 1080))
+codec = cv2.VideoWriter_fourcc(*CODEC)
+out = cv2.VideoWriter(PATH, codec, FPS, (WIDTH, HEIGHT))
 
 
 def get_frames():
@@ -47,8 +45,8 @@ def create_video(collection):
 def send_video():
     print "Connecting with statistics"
     s = socket.socket()
-    s.connect((host, port_out))
-    s.send(video_path)
+    s.connect((HOST, port_out))
+    s.send(PATH)
     s.close()
     print "Video path has been sent to statistics. Closing receiver."
 

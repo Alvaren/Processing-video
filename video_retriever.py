@@ -1,7 +1,6 @@
 # video_retriever.py
-import socket
+from methods.settings import *
 
-host_out = socket.gethostname()
 port_out = 1233
 video_url = "data/My_Movie.avi"
 
@@ -9,7 +8,7 @@ video_url = "data/My_Movie.avi"
 def send_message():
     print "Connecting with client"
     s = socket.socket()
-    s.connect((host_out, port_out))
+    s.connect((HOST, port_out))
     s.send(video_url)
     print "Video url has been send. Closing video retriever."
     s.close()

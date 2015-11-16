@@ -1,5 +1,6 @@
-import cv2
 import numpy as np
+
+from methods.settings import *
 
 fgbg_mog2 = cv2.createBackgroundSubtractorMOG2()
 fgbg_knn = cv2.createBackgroundSubtractorKNN()
@@ -18,12 +19,7 @@ def background_subtractor_knn(frame):
 
 
 def frame_resize(frame):
-    return frame_resize_by_size(frame, 2)
-
-
-def frame_resize_by_size(frame, number):
-    height, width = frame.shape[:2]
-    frame = cv2.resize(frame, (number * width, number * height), interpolation=cv2.INTER_CUBIC)
+    frame = cv2.resize(frame, (WIDTH, HEIGHT), interpolation=cv2.INTER_CUBIC)
     return frame
 
 
@@ -49,4 +45,4 @@ def remove_background(frame):
 
 
 def video_process(frame):
-    return frame_resize(frame)
+    return background_subtractor_mog2(frame)

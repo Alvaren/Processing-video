@@ -1,10 +1,8 @@
 # client.py
-import socket
-
-import cv2
 import numpy
 
-host = socket.gethostname()
+from methods.settings import *
+
 port_in = 1233
 port_out = 1234
 
@@ -12,7 +10,7 @@ port_out = 1234
 def get_video_url():
     print "Connecting with video retriever"
     s = socket.socket()
-    s.bind((host, port_in))
+    s.bind((HOST, port_in))
     s.listen(1)
     while True:
         c, addr = s.accept()
@@ -27,7 +25,7 @@ def get_video_url():
 
 def send_message(message):
     s = socket.socket()
-    s.connect((host, port_out))
+    s.connect((HOST, port_out))
     s.send(message)
     s.close()
 
@@ -35,12 +33,11 @@ def send_message(message):
 def split_frames(video):
     print "Connecting with server. Starting to send frames."
     cap = cv2.VideoCapture(video)
-    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
     try:
         while cap.isOpened():
             ret, frame = cap.read()
             if ret:
-                encode_frame(encode_param, frame)
+                encode_frame(frame)
             else:
                 break
         print "All frames has been sent. Closing client."
@@ -50,8 +47,8 @@ def split_frames(video):
         print 'Server is not responding. Shutting down.'
 
 
-def encode_frame(encode_param, frame):
-    result, imgencode = cv2.imencode('.jpg', frame, encode_param)
+def encode_frame(frame):
+    result, imgencode = cv2.imencode('.jpg', frame, ENCODE_PARAM)
     data = numpy.array(imgencode)
     data_to_send = data.tobytes()
     send_message(data_to_send)
