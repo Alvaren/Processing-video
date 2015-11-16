@@ -2,15 +2,15 @@
 
 from methods.video_processing import *
 
-s = socket.socket()
 port_in = 1234
 port_out = 1235
-s.bind((HOST, port_in))
-s.listen(1)
 
 
 def get_frames():
     print "Connecting with client. Starting to collect all frames."
+    s = socket.socket()
+    s.bind((HOST, port_in))
+    s.listen(1)
     coll = []
     while True:
         c, addr = s.accept()
@@ -23,6 +23,7 @@ def get_frames():
             coll.append(frame)
             c.send('Received the message.')
     print "All frames has been received."
+    s.close()
     c.close()
     modify_frames(coll)
 

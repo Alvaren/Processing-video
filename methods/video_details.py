@@ -6,7 +6,6 @@ from hachoir_metadata import extractMetadata
 from hachoir_parser import createParser
 
 
-# Get metadata for video file
 def metadata_for(filename):
     filename, realname = unicodeFilename(filename), filename
     parser = createParser(filename, realname)

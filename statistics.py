@@ -5,7 +5,7 @@ from methods.video_details import *
 
 port_in = 1236
 videos = []
-categories = ['bitrate', 'fps']
+categories = ['duration', 'bit_rate', 'frame_rate', 'width', 'height']
 
 
 def get_video_url():
