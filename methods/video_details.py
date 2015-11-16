@@ -28,3 +28,9 @@ def metadata_for(filename):
         print makePrintable(line, charset)
 
     return metadata
+
+
+def extract_data(metadata):
+    for data in sorted(metadata):
+        if len(data.values) > 0:
+            print data.key, data.values[0].value

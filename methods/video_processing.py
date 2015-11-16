@@ -17,6 +17,16 @@ def background_subtractor_knn(frame):
     return frame
 
 
+def frame_resize(frame):
+    return frame_resize_by_size(frame, 2)
+
+
+def frame_resize_by_size(frame, number):
+    height, width = frame.shape[:2]
+    frame = cv2.resize(frame, (number * width, number * height), interpolation=cv2.INTER_CUBIC)
+    return frame
+
+
 def remove_background(frame):
     height, width = frame.shape[:2]
     # Create a mask holder
@@ -39,4 +49,4 @@ def remove_background(frame):
 
 
 def video_process(frame):
-    return background_subtractor_mog2(frame)
+    return frame_resize(frame)
