@@ -20,6 +20,7 @@ def get_video_url():
         c, addr = s.accept()
         data = c.recv(1024)
         videos.append(data)
+        print data
         c.send('Received video url.')
         if len(videos) == (NUMBER_OF_VIDEOS + 1):
             break
@@ -55,13 +56,13 @@ def draw_graphs():
         data.append(tmp)
     final_chart = pygal.Line()
     final_chart.title = 'Final Chart'
-    final_chart.x_labels = PATH
+    final_chart.x_labels = videos
     for i in range(len(values)):
         line_chart = pygal.Line()
         line_chart.title = values[i]
-        line_chart.x_labels = PATH
+        line_chart.x_labels = videos
         asd = []
-        for j in range(len(PATH)):
+        for j in range(len(videos)):
             asd.append(data[j][i])
         line_chart.add(values[i], asd)
         if values[i] != 'width' and values[i] != 'height':
