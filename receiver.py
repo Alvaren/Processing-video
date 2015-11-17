@@ -53,4 +53,5 @@ def send_video():
 
 if __name__ == '__main__':
     print "Starting receiver"
-    get_frames()
+    for i in range(NUMBER_OF_VIDEOS):
+        get_frames()

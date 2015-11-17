@@ -18,7 +18,8 @@ def get_video_url():
         data = c.recv(1024)
         videos.append(data)
         c.send('Received video url.')
-        break
+        if len(videos) == NUMBER_OF_VIDEOS:
+            break
     print "All video Urls has been received."
     c.close()
     print_data(videos)

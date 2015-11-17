@@ -11,3 +11,4 @@ METHOD = 'mog2'
 CODEC = 'XVID'
 HOST = socket.gethostname()
 ENCODE_PARAM = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+NUMBER_OF_VIDEOS = 2

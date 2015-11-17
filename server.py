@@ -1,9 +1,10 @@
 # server.py
-
+import time
 from methods.video_processing import *
 
 port_in = 1234
 port_out = 1235
+frames = []
 
 
 def get_frames():
@@ -11,7 +12,6 @@ def get_frames():
     s = socket.socket()
     s.bind((HOST, port_in))
     s.listen(1)
-    coll = []
     while True:
         c, addr = s.accept()
         data = c.recv(300000)
@@ -20,12 +20,12 @@ def get_frames():
             break
         else:
             frame = np.fromstring(data, dtype=np.uint8)
-            coll.append(frame)
+            frames.append(frame)
             c.send('Received the message.')
     print "All frames has been received."
     s.close()
     c.close()
-    modify_frames(coll)
+    modify_frames(frames)
 
 
 def modify_frames(collection):
@@ -46,12 +46,18 @@ def encode_frame(frame):
 
 
 def send_message(message):
-    s = socket.socket()
-    s.connect((HOST, port_out))
-    s.send(message)
-    s.close()
+    try:
+        s = socket.socket()
+        s.connect((HOST, port_out))
+        s.send(message)
+        s.close()
+    except socket.error:
+        print 'Failed to connect with receiver. Will try again in 5 seconds.'
+        time.sleep(3)
+        send_message(message)
 
 
 if __name__ == '__main__':
     print "Starting server"
     get_frames()
+    modify_frames(frames)
