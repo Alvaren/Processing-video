@@ -53,8 +53,8 @@ def send_message(message):
         s.send(message)
         s.close()
     except socket.error:
-        print 'Failed to connect with receiver. Will try again in 5 seconds.'
-        time.sleep(3)
+        print 'Failed to connect with receiver. Will try again in 10 seconds.'
+        time.sleep(10)
         send_message(message)
 
 

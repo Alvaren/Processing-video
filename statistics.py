@@ -37,7 +37,7 @@ def print_data(collection):
 def draw_graphs():
     values = ['duration', 'bit_rate', 'frame_rate', 'width', 'height', 'size']
     data = []
-    for v in PATH:
+    for v in videos:
         tmp = []
         vid = metadata_for(v)
         for c in values:
@@ -66,7 +66,7 @@ def draw_graphs():
         line_chart.add(values[i], asd)
         if values[i] != 'width' and values[i] != 'height':
             final_chart.add(values[i], asd)
-        line_chart.render_to_file('graphs/'+ values[i] + '.svg')
+        line_chart.render_to_file('graphs/' + values[i] + '.svg')
     final_chart.render_to_file('graphs/final.svg')
 
 
