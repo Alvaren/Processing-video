@@ -18,8 +18,8 @@ def background_subtractor_knn(frame):
     return frame
 
 
-def frame_resize(frame):
-    frame = cv2.resize(frame, (WIDTH, HEIGHT), interpolation=cv2.INTER_CUBIC)
+def frame_resize(frame, width, height):
+    frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_CUBIC)
     return frame
 
 
@@ -44,5 +44,14 @@ def remove_background(frame):
     return frame
 
 
-def video_process(frame):
-    return background_subtractor_mog2(frame)
+def video_process(frame, method, width, height):
+    if method == 'None':
+        return frame
+    elif method == 'fps':
+        return frame
+    elif method == 'knn':
+        return background_subtractor_knn(frame)
+    elif method == 'mog2':
+        return background_subtractor_mog2(frame)
+    else:
+        return frame_resize(frame, width, height)

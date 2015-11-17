@@ -1,5 +1,6 @@
 # server.py
 import time
+
 from methods.video_processing import *
 
 port_in = 1234
@@ -7,7 +8,7 @@ port_out = 1235
 frames = []
 
 
-def get_frames():
+def get_frames(method, width, height):
     print "Connecting with client. Starting to collect all frames."
     s = socket.socket()
     s.bind((HOST, port_in))
@@ -25,20 +26,20 @@ def get_frames():
     print "All frames has been received."
     s.close()
     c.close()
-    modify_frames(frames)
+    modify_frames(frames, method, width, height)
 
 
-def modify_frames(collection):
+def modify_frames(collection, method, width, height):
     print "Starting to modify frames."
     for c in collection:
         frame = cv2.imdecode(c, 1)
-        encode_frame(frame)
+        encode_frame(frame, method, width, height)
     send_message("stop")
     print "All frames has been modified. Stopping server."
 
 
-def encode_frame(frame):
-    frame = video_process(frame)
+def encode_frame(frame, method, width, height):
+    frame = video_process(frame, method, width, height)
     result, imgencode = cv2.imencode('.jpg', frame, ENCODE_PARAM)
     data = np.array(imgencode)
     data_to_send = data.tobytes()
@@ -59,5 +60,6 @@ def send_message(message):
 
 if __name__ == '__main__':
     print "Starting server"
-    get_frames()
-    modify_frames(frames)
+    get_frames(METHOD[0], WIDTH[0], HEIGHT[0])
+    for i in range(1, NUMBER_OF_VIDEOS):
+        modify_frames(frames, METHOD[i], WIDTH[i], HEIGHT[i])

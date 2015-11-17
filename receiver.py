@@ -8,7 +8,7 @@ port_in = 1235
 port_out = 1236
 
 
-def get_frames():
+def get_frames(path, fps, width, height):
     print "Connecting with server. Starting to collect all frames."
     s = socket.socket()
     s.bind((HOST, port_in))
@@ -27,13 +27,13 @@ def get_frames():
     print "All frames has been received"
     s.close()
     c.close()
-    create_video(coll)
+    create_video(coll, path, fps, width, height)
     send_video()
 
 
-def create_video(collection):
+def create_video(collection, path, fps, width, height):
     codec = cv2.VideoWriter_fourcc(*CODEC)
-    out = cv2.VideoWriter(PATH, codec, FPS, (WIDTH, HEIGHT))
+    out = cv2.VideoWriter(path, codec, fps, (width, height))
     print "Starting to change frames into video"
     for c in collection:
         frame = cv2.imdecode(c, 1)
@@ -46,7 +46,7 @@ def send_video():
     print "Connecting with statistics"
     s = socket.socket()
     s.connect((HOST, port_out))
-    s.send(PATH)
+    s.send(PATH[i])
     s.close()
     print "Video path has been sent to statistics. Closing receiver."
 
@@ -54,4 +54,4 @@ def send_video():
 if __name__ == '__main__':
     print "Starting receiver"
     for i in range(NUMBER_OF_VIDEOS):
-        get_frames()
+        get_frames(PATH[i], FPS[i], WIDTH[i], HEIGHT[i])
