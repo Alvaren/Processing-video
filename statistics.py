@@ -31,16 +31,19 @@ def get_video_url():
 
 def print_data(collection):
     for c in collection:
-        metadata_for(c)
+        metadata_for('data/' + c)
     print "All data has been shown. Stopping statistics."
 
 
 def draw_graphs():
     values = ['duration', 'bit_rate', 'frame_rate', 'width', 'height', 'size']
+    values_with_unit = ['duration [sec]', 'bitRate[Mbit/s]', 'frameRate[fps]', 'width[pixels]',
+                        'height[pixels]',
+                        'size[Mb]']
     data = []
     for v in videos:
         tmp = []
-        vid = metadata_for(v)
+        vid = metadata_for('data/' + v)
         for c in values:
             if c == 'duration':
                 seconds = vid.get(c)
@@ -49,7 +52,7 @@ def draw_graphs():
                 bitrate = (vid.get(c) / float(1000000))
                 tmp.append(bitrate)
             elif c == 'size':
-                size = os.path.getsize(v) / 1000000
+                size = os.path.getsize('data/' + v) / 1000000
                 tmp.append(size)
             else:
                 tmp.append(vid.get(c))
@@ -59,14 +62,14 @@ def draw_graphs():
     final_chart.x_labels = videos
     for i in range(len(values)):
         line_chart = pygal.Line()
-        line_chart.title = values[i]
+        line_chart.title = values_with_unit[i]
         line_chart.x_labels = videos
         asd = []
         for j in range(len(videos)):
             asd.append(data[j][i])
-        line_chart.add(values[i], asd)
+        line_chart.add(values_with_unit[i], asd)
         if values[i] != 'width' and values[i] != 'height':
-            final_chart.add(values[i], asd)
+            final_chart.add(values_with_unit[i], asd)
         line_chart.render_to_file('graphs/' + values[i] + '.svg')
     final_chart.render_to_file('graphs/final.svg')
 

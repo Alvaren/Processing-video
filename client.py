@@ -32,7 +32,7 @@ def send_message(message):
 
 def split_frames(video):
     print "Connecting with server. Starting to send frames."
-    cap = cv2.VideoCapture(video)
+    cap = cv2.VideoCapture('data/' + video)
     try:
         while cap.isOpened():
             ret, frame = cap.read()

@@ -53,5 +53,7 @@ def video_process(frame, method, width, height):
         return background_subtractor_knn(frame)
     elif method == 'mog2':
         return background_subtractor_mog2(frame)
+    elif method == 'own':
+        return remove_background(frame)
     else:
         return frame_resize(frame, width, height)

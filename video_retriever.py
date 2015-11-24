@@ -3,7 +3,7 @@ from methods.settings import *
 
 port_out = 1233
 port_statistics = 1236
-video_url = "data/My_Movie.avi"
+video_url = "My_Movie.avi"
 
 
 def send_message(port):
