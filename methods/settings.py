@@ -11,7 +11,8 @@ HEIGHT = [1080, 1080, 1080, 1080, 1080, 1080, 1080, 1152, 1280, 360, 600, 1080]
 FPS = [30.0, 40.0, 50.0, 20.0, 10.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0]
 METHOD = ['None', 'fps', 'fps', 'fps', 'fps', 'mog2', 'knn', 'resolution', 'resolution', 'resolution', 'resolution',
           'own']
+# XVID, H264, MPEG, MP42
 CODEC = 'XVID'
 HOST = socket.gethostname()
 ENCODE_PARAM = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
-NUMBER_OF_VIDEOS = 12
+NUMBER_OF_VIDEOS = 11
