@@ -8,7 +8,6 @@ from methods.video_details import *
 
 port_in = 1236
 videos = []
-categories = ['duration', 'bit_rate', 'frame_rate', 'width', 'height']
 
 
 def get_video_url():
@@ -26,7 +25,7 @@ def get_video_url():
             break
     print "All video Urls has been received."
     c.close()
-    print_data(videos)
+    # print_data(videos)
 
 
 def print_data(collection):
