@@ -5,11 +5,11 @@ from methods.video_processing import *
 
 port_in = 1234
 port_out = 1235
-frames = []
 
 
-def get_frames(method, width, height):
+def get_frames():
     print "Connecting with client. Starting to collect all frames."
+    frames = []
     s = socket.socket()
     s.bind((HOST, port_in))
     s.listen(1)
@@ -26,7 +26,7 @@ def get_frames(method, width, height):
     print "All frames has been received."
     s.close()
     c.close()
-    modify_frames(frames, method, width, height)
+    return frames
 
 
 def modify_frames(collection, method, width, height):
@@ -35,7 +35,6 @@ def modify_frames(collection, method, width, height):
         frame = cv2.imdecode(c, 1)
         encode_frame(frame, method, width, height)
         # print "Frame has been modified"
-    send_message("stop")
     print "All frames has been modified. Stopping server."
 
 
@@ -61,6 +60,9 @@ def send_message(message):
 
 if __name__ == '__main__':
     print "Starting server"
-    get_frames(METHOD[0], WIDTH[0], HEIGHT[0])
+    frames = get_frames()
+    modify_frames(frames, METHOD[0], WIDTH[0], HEIGHT[0])
+    send_message("stop")
     for i in range(1, NUMBER_OF_VIDEOS):
         modify_frames(frames, METHOD[i], WIDTH[i], HEIGHT[i])
+        send_message("stop")

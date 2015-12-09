@@ -21,7 +21,7 @@ def get_video_url():
         c.send('Received video url.')
         break
     c.close()
-    split_frames(url)
+    return url
 
 
 def send_message(message):
@@ -47,7 +47,6 @@ def split_frames(video):
             break
     print "All frames has been sent. Closing client."
     cap.release()
-    send_message("stop")
 
 
 def encode_frame(frame):
@@ -59,4 +58,6 @@ def encode_frame(frame):
 
 if __name__ == '__main__':
     print "Starting client"
-    get_video_url()
+    url = get_video_url()
+    split_frames(url)
+    send_message("stop")

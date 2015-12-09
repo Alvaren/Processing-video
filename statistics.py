@@ -3,16 +3,15 @@ import os
 
 import pygal
 
-from pygal import Config
 from methods.settings import *
 from methods.video_details import *
 
 port_in = 1236
-videos = []
 
 
 def get_video_url():
     print "Connecting with receiver and client to receiver video urls."
+    videos = []
     s = socket.socket()
     s.bind((HOST, port_in))
     s.listen(1)
@@ -26,6 +25,7 @@ def get_video_url():
             break
     print "All video Urls has been received."
     c.close()
+    return videos
     # print_data(videos)
 
 
@@ -35,7 +35,7 @@ def print_data(collection):
     print "All data has been shown. Stopping statistics."
 
 
-def draw_graphs():
+def draw_graphs(videos):
     values = ['duration', 'bit_rate', 'frame_rate', 'width', 'height', 'size']
     values_with_unit = ['duration [sec]', 'bitRate[Mbit/s]', 'frameRate[fps]', 'width[pixels]',
                         'height[pixels]',
@@ -76,5 +76,5 @@ def draw_graphs():
 
 if __name__ == '__main__':
     print "Starting statistics"
-    get_video_url()
-    draw_graphs()
+    video = get_video_url()
+    draw_graphs(video)

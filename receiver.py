@@ -8,7 +8,7 @@ port_in = 1235
 port_out = 1236
 
 
-def get_frames(path, fps, width, height, codec):
+def get_frames():
     print "Connecting with server. Starting to collect all frames."
     s = socket.socket()
     s.bind((HOST, port_in))
@@ -27,8 +27,7 @@ def get_frames(path, fps, width, height, codec):
     print "All frames has been received"
     s.close()
     c.close()
-    create_video(coll, path, fps, width, height, codec)
-    send_video()
+    return coll
 
 
 def create_video(collection, path, fps, width, height, codec):
@@ -59,4 +58,6 @@ def send_video():
 if __name__ == '__main__':
     print "Starting receiver"
     for i in range(NUMBER_OF_VIDEOS):
-        get_frames(PATH[i], FPS[i], WIDTH[i], HEIGHT[i], CODEC[i])
+        frames = get_frames()
+        create_video(frames, PATH[i], FPS[i], WIDTH[i], HEIGHT[i], CODEC[i])
+        send_video()
