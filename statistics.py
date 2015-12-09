@@ -78,3 +78,7 @@ if __name__ == '__main__':
     print "Starting statistics"
     video = get_video_url()
     draw_graphs(video)
+    print ''
+    print 'All videos has been processed'
+    path = os.path.dirname(__file__) + '/graphs/final.svg'
+    os.startfile(path)
