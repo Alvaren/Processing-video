@@ -80,5 +80,5 @@ if __name__ == '__main__':
     draw_graphs(video)
     print ''
     print 'All videos has been processed'
-    path = os.path.dirname(__file__) + '/graphs/final.svg'
+    path = os.path.dirname(os.path.realpath('__file__')) + '/graphs/final.svg'
     os.startfile(path)
