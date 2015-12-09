@@ -1,5 +1,6 @@
 # client.py
 import numpy
+import time
 
 from methods.settings import *
 
@@ -24,27 +25,29 @@ def get_video_url():
 
 
 def send_message(message):
-    s = socket.socket()
-    s.connect((HOST, port_out))
-    s.send(message)
-    s.close()
+    try:
+        s = socket.socket()
+        s.connect((HOST, port_out))
+        s.send(message)
+        s.close()
+    except socket.error:
+        print 'Failed to connect with server. Will try again in 10 seconds.'
+        time.sleep(10)
+        send_message(message)
 
 
 def split_frames(video):
     print "Connecting with server. Starting to send frames."
     cap = cv2.VideoCapture('data/' + video)
-    try:
-        while cap.isOpened():
-            ret, frame = cap.read()
-            if ret:
-                encode_frame(frame)
-            else:
-                break
-        print "All frames has been sent. Closing client."
-        cap.release()
-        send_message("stop")
-    except socket.error:
-        print 'Server is not responding. Shutting down.'
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if ret:
+            encode_frame(frame)
+        else:
+            break
+    print "All frames has been sent. Closing client."
+    cap.release()
+    send_message("stop")
 
 
 def encode_frame(frame):

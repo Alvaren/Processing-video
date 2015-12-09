@@ -44,6 +44,45 @@ def remove_background(frame):
     return frame
 
 
+def change_colorspace(frame):
+    # Convert BGR to HSV
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    # define range of blue color in HSV
+    lower_blue = np.array([110, 50, 50])
+    upper_blue = np.array([130, 255, 255])
+    # Threshold the HSV image to get only blue colors
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # Bitwise-AND mask and original image
+    res = cv2.bitwise_and(frame, frame, mask=mask)
+    return res
+
+
+def global_threshold(frame):
+    ret1, th1 = cv2.threshold(frame, 127, 255, cv2.THRESH_BINARY)
+    return th1
+
+
+def translate_frame(frame, width, height, direction_x, direction_y):
+    M = np.float32([[1, 0, direction_x], [0, 1, direction_y]])
+    dst = cv2.warpAffine(frame, M, (width, height))
+    return frame_resize(dst, width, height)
+
+
+def rotate_frame(frame, width, height, angle):
+    M = cv2.getRotationMatrix2D((width / 2, height / 2), angle, 1)
+    dst = cv2.warpAffine(frame, M, (width, height))
+    return frame_resize(dst, width, height)
+
+
+def affine_transformation(frame, width, height):
+    rows, cols, ch = frame.shape
+    pts1 = np.float32([[50, 50], [200, 50], [50, 200]])
+    pts2 = np.float32([[10, 100], [200, 50], [100, 250]])
+    M = cv2.getAffineTransform(pts1, pts2)
+    dst = cv2.warpAffine(frame, M, (cols, rows))
+    return frame_resize(dst, width, height)
+
+
 def video_process(frame, method, width, height):
     if method == 'None':
         return frame
@@ -55,5 +94,15 @@ def video_process(frame, method, width, height):
         return background_subtractor_mog2(frame)
     elif method == 'own':
         return remove_background(frame)
+    elif method == 'colorspace':
+        return change_colorspace(frame)
+    elif method == 'global threshold':
+        return global_threshold(frame)
+    elif method == 'translate frame':
+        return translate_frame(frame, width, height, 100, 50)
+    elif method == 'rotate frame':
+        return rotate_frame(frame, width, height, 90)
+    elif method == 'affine transformation':
+        return affine_transformation(frame, width, height)
     else:
         return frame_resize(frame, width, height)

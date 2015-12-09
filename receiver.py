@@ -1,7 +1,7 @@
 # receiver.py
 
 import numpy as np
-
+import time
 from methods.settings import *
 
 port_in = 1235
@@ -43,12 +43,17 @@ def create_video(collection, path, fps, width, height, codec):
 
 
 def send_video():
-    print "Connecting with statistics"
-    s = socket.socket()
-    s.connect((HOST, port_out))
-    s.send(PATH[i])
-    s.close()
-    print "Video path has been sent to statistics. Closing receiver."
+    try:
+        print "Connecting with statistics"
+        s = socket.socket()
+        s.connect((HOST, port_out))
+        s.send(PATH[i])
+        s.close()
+        print "Video path has been sent to statistics. Closing receiver."
+    except socket.error:
+        print 'Failed to connect with statistics. Will try again in 10 seconds.'
+        time.sleep(10)
+        send_video()
 
 
 if __name__ == '__main__':

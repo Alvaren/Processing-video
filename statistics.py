@@ -3,6 +3,7 @@ import os
 
 import pygal
 
+from pygal import Config
 from methods.settings import *
 from methods.video_details import *
 
@@ -56,12 +57,12 @@ def draw_graphs():
             else:
                 tmp.append(vid.get(c))
         data.append(tmp)
-    final_chart = pygal.Line()
-    final_chart.title = 'Final Chart'
+    final_chart = pygal.Line(x_label_rotation=270)
+    final_chart.title = 'Final Chart - 30s video'
     final_chart.x_labels = videos
     for i in range(len(values)):
-        line_chart = pygal.Line()
-        line_chart.title = values_with_unit[i]
+        line_chart = pygal.Line(x_label_rotation=270)
+        line_chart.title = values_with_unit[i] + ' - 30s video'
         line_chart.x_labels = videos
         asd = []
         for j in range(len(videos)):

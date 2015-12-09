@@ -15,7 +15,7 @@ def get_frames(method, width, height):
     s.listen(1)
     while True:
         c, addr = s.accept()
-        data = c.recv(300000)
+        data = c.recv(350000)
         if data == "stop":
             c.send('Stopping the server.')
             break
