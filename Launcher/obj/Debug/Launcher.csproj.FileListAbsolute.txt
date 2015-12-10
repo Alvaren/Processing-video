@@ -1,0 +1,10 @@
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\bin\Debug\Launcher.exe.config
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\bin\Debug\Launcher.exe
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\bin\Debug\Launcher.pdb
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.Form1.resources
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.Form2.resources
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.Properties.Resources.resources
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.csproj.GenerateResource.Cache
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.exe
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.pdb
+c:\users\sedi\documents\visual studio 2015\Projects\Launcher\Launcher\obj\Debug\Launcher.csprojResolveAssemblyReference.cache
