@@ -9,7 +9,7 @@ port_out = 1235
 
 def get_number_of_videos():
     s = socket.socket()
-    s.bind((HOST, 1240))
+    s.bind((HOST, port_in))
     s.listen(1)
     while True:
         c, addr = s.accept()

@@ -1,5 +1,6 @@
 # stastistics.py
 import os
+import time
 
 import pygal
 
@@ -11,7 +12,7 @@ port_in = 1236
 
 def get_number_of_videos():
     s = socket.socket()
-    s.bind((HOST, 1242))
+    s.bind((HOST, port_in))
     s.listen(1)
     while True:
         c, addr = s.accept()
@@ -72,11 +73,11 @@ def draw_graphs(videos):
                 tmp.append(vid.get(c))
         data.append(tmp)
     final_chart = pygal.Line(x_label_rotation=270)
-    final_chart.title = 'Final Chart - 30s video'
+    final_chart.title = 'Final Chart'
     final_chart.x_labels = videos
     for i in range(len(values)):
         line_chart = pygal.Line(x_label_rotation=270)
-        line_chart.title = values_with_unit[i] + ' - 30s video'
+        line_chart.title = values_with_unit[i]
         line_chart.x_labels = videos
         asd = []
         for j in range(len(videos)):
@@ -88,6 +89,19 @@ def draw_graphs(videos):
     final_chart.render_to_file('data/graphs/final.svg')
 
 
+def stop_launcher():
+    try:
+        s = socket.socket()
+        s.connect((HOST, 1232))
+        s.send("stop")
+        # print "Video url has been send. Closing video retriever."
+        s.close()
+    except socket.error:
+        print 'Failed to connect with launcher. Will try again in 10 seconds.'
+        time.sleep(10)
+        stop_launcher()
+
+
 if __name__ == '__main__':
     print "Starting statistics"
     number = get_number_of_videos()
@@ -95,5 +109,6 @@ if __name__ == '__main__':
     draw_graphs(video)
     print ''
     print 'All videos has been processed'
-    path = os.path.dirname(os.path.realpath('__file__')) + '/data/graphs/final.svg'
-    os.startfile(path)
+    # path = os.path.dirname(os.path.realpath('__file__')) + '/data/graphs/final.svg'
+    # os.startfile(path)
+    stop_launcher()

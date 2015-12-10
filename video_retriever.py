@@ -43,19 +43,16 @@ def send_message(host_name, port, path):
         send_message(host_name, port, path)
 
 
-def send_number():
-    return number_of_videos
-
-
 if __name__ == '__main__':
     print "Connecting with launcher."
+
     data = get_video_url()
     video_path = data[0]
     number_of_videos = data[1]
-    print data[1]
-    send_message('server', 1240, number_of_videos)
-    send_message('receiver', 1241, number_of_videos)
-    send_message('statistics', 1242, number_of_videos)
+
+    send_message('server', 1234, number_of_videos)
+    send_message('receiver', 1235, number_of_videos)
+    send_message('statistics', 1236, number_of_videos)
 
     send_message('client', port_out, video_path)
     send_message('statistics', port_statistics, video_path)
