@@ -49,7 +49,6 @@ def modify_frames(collection, method, width, height):
     for c in collection:
         frame = cv2.imdecode(c, 1)
         encode_frame(frame, method, width, height)
-        # print "Frame has been modified"
     print "All frames has been modified. Stopping server."
 
 

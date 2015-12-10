@@ -25,34 +25,24 @@ def frame_resize(frame, width, height):
 
 def remove_background(frame):
     height, width = frame.shape[:2]
-    # Create a mask holder
     mask = np.zeros(frame.shape[:2], np.uint8)
-    # Grab Cut the object
     bgdModel = np.zeros((1, 65), np.float64)
     fgdModel = np.zeros((1, 65), np.float64)
-    # Hard Coding the Rect The object must lie within this rect.
     rect = (10, 10, width - 30, height - 30)
     cv2.grabCut(frame, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
     mask = np.where((mask == 2) | (mask == 0), 0, 1).astype('uint8')
     img1 = frame * mask[:, :, np.newaxis]
-    # Get the background
     background = frame - img1
-    # Change all pixels in the background that are not black to white
     background[np.where((background > [0, 0, 0]).all(axis=2))] = [255, 255, 255]
-    # Add the background and the image
     frame = background + img1
     return frame
 
 
 def change_colorspace(frame):
-    # Convert BGR to HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    # define range of blue color in HSV
     lower_blue = np.array([110, 50, 50])
     upper_blue = np.array([130, 255, 255])
-    # Threshold the HSV image to get only blue colors
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    # Bitwise-AND mask and original image
     res = cv2.bitwise_and(frame, frame, mask=mask)
     return res
 

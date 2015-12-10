@@ -1,5 +1,4 @@
 # video_retriever.py
-import socket
 import time
 
 from methods.settings import *
@@ -35,7 +34,6 @@ def send_message(host_name, port, path):
         s = socket.socket()
         s.connect((HOST, port))
         s.send(path)
-        # print "Video url has been send. Closing video retriever."
         s.close()
     except socket.error:
         print 'Failed to connect with ' + host_name + '. Will try again in 10 seconds.'

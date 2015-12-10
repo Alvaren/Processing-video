@@ -64,7 +64,6 @@ def send_video():
         s.connect((HOST, port_out))
         s.send(PATH[i])
         s.close()
-        print "Video path has been sent to statistics. Closing receiver."
     except socket.error:
         print 'Failed to connect with statistics. Will try again in 10 seconds.'
         time.sleep(10)

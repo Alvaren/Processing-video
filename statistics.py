@@ -94,7 +94,6 @@ def stop_launcher():
         s = socket.socket()
         s.connect((HOST, 1232))
         s.send("stop")
-        # print "Video url has been send. Closing video retriever."
         s.close()
     except socket.error:
         print 'Failed to connect with launcher. Will try again in 10 seconds.'
@@ -107,8 +106,5 @@ if __name__ == '__main__':
     number = get_number_of_videos()
     video = get_video_url(number)
     draw_graphs(video)
-    print ''
     print 'All videos has been processed'
-    # path = os.path.dirname(os.path.realpath('__file__')) + '/data/graphs/final.svg'
-    # os.startfile(path)
     stop_launcher()
