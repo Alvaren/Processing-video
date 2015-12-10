@@ -31,7 +31,7 @@ def get_video_url():
 
 def print_data(collection):
     for c in collection:
-        metadata_for('data/' + c)
+        metadata_for('data/video/' + c)
     print "All data has been shown. Stopping statistics."
 
 
@@ -43,7 +43,7 @@ def draw_graphs(videos):
     data = []
     for v in videos:
         tmp = []
-        vid = metadata_for('data/' + v)
+        vid = metadata_for('data/video/' + v)
         for c in values:
             if c == 'duration':
                 seconds = vid.get(c)
@@ -52,7 +52,7 @@ def draw_graphs(videos):
                 bitrate = (vid.get(c) / float(1000000))
                 tmp.append(bitrate)
             elif c == 'size':
-                size = os.path.getsize('data/' + v) / 1000000
+                size = os.path.getsize('data/video/' + v) / 1000000
                 tmp.append(size)
             else:
                 tmp.append(vid.get(c))
@@ -70,8 +70,8 @@ def draw_graphs(videos):
         line_chart.add(values_with_unit[i], asd)
         if values[i] != 'width' and values[i] != 'height':
             final_chart.add(values_with_unit[i], asd)
-        line_chart.render_to_file('graphs/' + values[i] + '.svg')
-    final_chart.render_to_file('graphs/final.svg')
+        line_chart.render_to_file('data/graphs/' + values[i] + '.svg')
+    final_chart.render_to_file('data/graphs/final.svg')
 
 
 if __name__ == '__main__':
@@ -80,5 +80,5 @@ if __name__ == '__main__':
     draw_graphs(video)
     print ''
     print 'All videos has been processed'
-    path = os.path.dirname(os.path.realpath('__file__')) + '/graphs/final.svg'
+    path = os.path.dirname(os.path.realpath('__file__')) + '/data/graphs/final.svg'
     os.startfile(path)

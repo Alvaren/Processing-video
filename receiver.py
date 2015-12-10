@@ -32,7 +32,7 @@ def get_frames():
 
 def create_video(collection, path, fps, width, height, codec):
     codec = cv2.VideoWriter_fourcc(*codec)
-    out = cv2.VideoWriter('data/' + path, codec, fps, (width, height))
+    out = cv2.VideoWriter('data/video/' + path, codec, fps, (width, height))
     print "Starting to change frames into video"
     for c in collection:
         frame = cv2.imdecode(c, 1)
