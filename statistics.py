@@ -9,7 +9,21 @@ from methods.video_details import *
 port_in = 1236
 
 
-def get_video_url():
+def get_number_of_videos():
+    s = socket.socket()
+    s.bind((HOST, 1242))
+    s.listen(1)
+    while True:
+        c, addr = s.accept()
+        data = c.recv(1024)
+        c.send('Received the message.')
+        break
+    s.close()
+    c.close()
+    return data
+
+
+def get_video_url(number_of_videos):
     print "Connecting with receiver and client to receiver video urls."
     videos = []
     s = socket.socket()
@@ -21,7 +35,7 @@ def get_video_url():
         videos.append(data)
         print data
         c.send('Received video url.')
-        if len(videos) == (NUMBER_OF_VIDEOS + 1):
+        if len(videos) == (int(float(number_of_videos)) + 1):
             break
     print "All video Urls has been received."
     c.close()
@@ -76,7 +90,8 @@ def draw_graphs(videos):
 
 if __name__ == '__main__':
     print "Starting statistics"
-    video = get_video_url()
+    number = get_number_of_videos()
+    video = get_video_url(number)
     draw_graphs(video)
     print ''
     print 'All videos has been processed'

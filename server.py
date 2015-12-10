@@ -7,6 +7,21 @@ port_in = 1234
 port_out = 1235
 
 
+def get_number_of_videos():
+    s = socket.socket()
+    s.bind((HOST, 1240))
+    s.listen(1)
+    while True:
+        c, addr = s.accept()
+        data = c.recv(1024)
+        number = data
+        c.send('Received the message.')
+        break
+    s.close()
+    c.close()
+    return number
+
+
 def get_frames():
     print "Connecting with client. Starting to collect all frames."
     frames = []
@@ -60,9 +75,10 @@ def send_message(message):
 
 if __name__ == '__main__':
     print "Starting server"
+    counter = int(float(get_number_of_videos()))
     frames = get_frames()
     modify_frames(frames, METHOD[0], WIDTH[0], HEIGHT[0])
     send_message("stop")
-    for i in range(1, NUMBER_OF_VIDEOS):
+    for i in range(1, counter):
         modify_frames(frames, METHOD[i], WIDTH[i], HEIGHT[i])
         send_message("stop")

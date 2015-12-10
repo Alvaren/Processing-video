@@ -1,11 +1,27 @@
 # receiver.py
 
-import numpy as np
 import time
+
+import numpy as np
+
 from methods.settings import *
 
 port_in = 1235
 port_out = 1236
+
+
+def get_number_of_videos():
+    s = socket.socket()
+    s.bind((HOST, 1241))
+    s.listen(1)
+    while True:
+        c, addr = s.accept()
+        data = c.recv(1024)
+        c.send('Received the message.')
+        break
+    s.close()
+    c.close()
+    return data
 
 
 def get_frames():
@@ -57,7 +73,8 @@ def send_video():
 
 if __name__ == '__main__':
     print "Starting receiver"
-    for i in range(NUMBER_OF_VIDEOS):
+    counter = int(float(get_number_of_videos()))
+    for i in range(counter):
         frames = get_frames()
         create_video(frames, PATH[i], FPS[i], WIDTH[i], HEIGHT[i], CODEC[i])
         send_video()

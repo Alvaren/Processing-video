@@ -1,4 +1,5 @@
 # video_retriever.py
+import socket
 import time
 
 from methods.settings import *
@@ -23,6 +24,7 @@ def get_video_url():
         else:
             values.append(data)
             c.send('Received data.')
+    s.close()
     c.close()
     return values
 
@@ -33,21 +35,27 @@ def send_message(host_name, port, path):
         s = socket.socket()
         s.connect((HOST, port))
         s.send(path)
-        print "Video url has been send. Closing video retriever."
+        # print "Video url has been send. Closing video retriever."
         s.close()
     except socket.error:
         print 'Failed to connect with ' + host_name + '. Will try again in 10 seconds.'
-        time.sleep(10)
+        time.sleep(5)
         send_message(host_name, port, path)
+
+
+def send_number():
+    return number_of_videos
 
 
 if __name__ == '__main__':
     print "Connecting with launcher."
     data = get_video_url()
     video_path = data[0]
-    NUMBER_OF_VIDEOS = data[1]
-    print NUMBER_OF_VIDEOS
-    print "Sending video to client."
+    number_of_videos = data[1]
+    print data[1]
+    send_message('server', 1240, number_of_videos)
+    send_message('receiver', 1241, number_of_videos)
+    send_message('statistics', 1242, number_of_videos)
+
     send_message('client', port_out, video_path)
-    print "Sending video to statistics."
     send_message('statistics', port_statistics, video_path)

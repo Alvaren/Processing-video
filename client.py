@@ -1,6 +1,7 @@
 # client.py
-import numpy
 import time
+
+import numpy
 
 from methods.settings import *
 
