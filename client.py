@@ -10,7 +10,7 @@ port_out = 1234
 
 
 def get_video_url():
-    print "Connecting with video retriever"
+    print 'Client: Connecting with video_retriever.'
     s = socket.socket()
     s.bind((HOST, port_in))
     s.listen(1)
@@ -18,7 +18,7 @@ def get_video_url():
         c, addr = s.accept()
         data = c.recv(1024)
         url = data
-        print "Video url has been captured."
+        print 'Client: Video path has been captured.'
         c.send('Received video url.')
         break
     c.close()
@@ -32,13 +32,13 @@ def send_message(message):
         s.send(message)
         s.close()
     except socket.error:
-        print 'Failed to connect with server. Will try again in 10 seconds.'
+        print 'Client: Failed to connect with server. Will try again in 10 seconds.'
         time.sleep(10)
         send_message(message)
 
 
 def split_frames(video):
-    print "Connecting with server. Starting to send frames."
+    print 'Client: Connecting with server. Starting to send frames.'
     cap = cv2.VideoCapture('data/video/' + video)
     while cap.isOpened():
         ret, frame = cap.read()
@@ -46,7 +46,6 @@ def split_frames(video):
             encode_frame(frame)
         else:
             break
-    print "All frames has been sent. Closing client."
     cap.release()
 
 
@@ -58,7 +57,8 @@ def encode_frame(frame):
 
 
 if __name__ == '__main__':
-    print "Starting client"
+    print 'Client: Starting connections.'
     url = get_video_url()
     split_frames(url)
     send_message("stop")
+    print 'Client: All data has been sent. Closing connections.'

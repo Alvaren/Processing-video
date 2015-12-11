@@ -9,7 +9,7 @@ port_statistics = 1236
 
 
 def get_video_url():
-    print "Connecting with video retriever"
+    print 'VideoRetriever: Connecting with launcher.'
     values = []
     s = socket.socket()
     s.bind((HOST, port_in))
@@ -29,20 +29,20 @@ def get_video_url():
 
 
 def send_message(host_name, port, path):
-    print "Connecting with " + host_name
+    print 'VideoRetriever: Connecting with ' + host_name + '.'
     try:
         s = socket.socket()
         s.connect((HOST, port))
         s.send(path)
         s.close()
     except socket.error:
-        print 'Failed to connect with ' + host_name + '. Will try again in 10 seconds.'
-        time.sleep(5)
+        print 'VideoRetriever: Failed to connect with ' + host_name + '. Will try again in 10 seconds.'
+        time.sleep(10)
         send_message(host_name, port, path)
 
 
 if __name__ == '__main__':
-    print "Connecting with launcher."
+    print "VideoRetriever: Starting connections."
 
     data = get_video_url()
     video_path = data[0]
@@ -54,3 +54,4 @@ if __name__ == '__main__':
 
     send_message('client', port_out, video_path)
     send_message('statistics', port_statistics, video_path)
+    print 'VideoRetriever: All data has been sent. Closing connections.'

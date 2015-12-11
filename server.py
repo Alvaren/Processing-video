@@ -8,6 +8,7 @@ port_out = 1235
 
 
 def get_number_of_videos():
+    print 'Server: Connecting with video_retriever.'
     s = socket.socket()
     s.bind((HOST, port_in))
     s.listen(1)
@@ -23,7 +24,7 @@ def get_number_of_videos():
 
 
 def get_frames():
-    print "Connecting with client. Starting to collect all frames."
+    print 'Server: Connecting with client. Starting to collect all frames.'
     frames = []
     s = socket.socket()
     s.bind((HOST, port_in))
@@ -38,18 +39,18 @@ def get_frames():
             frame = np.fromstring(data, dtype=np.uint8)
             frames.append(frame)
             c.send('Received the message.')
-    print "All frames has been received."
+    print 'Server: All frames has been received.'
     s.close()
     c.close()
     return frames
 
 
 def modify_frames(collection, method, width, height):
-    print "Starting to modify frames."
+    print 'Server: Starting to modify frames.'
     for c in collection:
         frame = cv2.imdecode(c, 1)
         encode_frame(frame, method, width, height)
-    print "All frames has been modified. Stopping server."
+    print 'Server: All frames has been modified.'
 
 
 def encode_frame(frame, method, width, height):
@@ -73,7 +74,7 @@ def send_message(message):
 
 
 if __name__ == '__main__':
-    print "Starting server"
+    print 'Server: Starting connections.'
     counter = int(float(get_number_of_videos()))
     frames = get_frames()
     modify_frames(frames, METHOD[0], WIDTH[0], HEIGHT[0])
@@ -81,3 +82,4 @@ if __name__ == '__main__':
     for i in range(1, counter):
         modify_frames(frames, METHOD[i], WIDTH[i], HEIGHT[i])
         send_message("stop")
+    print 'Server: All data has been sent. Closing connections.'
