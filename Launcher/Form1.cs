@@ -61,6 +61,9 @@ namespace Launcher
             comboBox1.Enabled = false;
             textBox1.Enabled = false;
             button2.Enabled = false;
+            label3.Visible = true;
+            pictureBox1.Visible = true;
+            label4.Visible = true;
             Form2 settingsForm = new Form2();
             this.Hide();
             settingsForm.ShowDialog();
@@ -102,6 +105,11 @@ namespace Launcher
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
         {
 
         }

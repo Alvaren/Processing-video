@@ -11,6 +11,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Launcher
 {
@@ -23,7 +24,16 @@ namespace Launcher
         {
             InitializeComponent();
             this.ShowInTaskbar = true;
-            listen();
+
+            Thread oThread = new Thread(new ThreadStart(this.listen));
+            oThread.Start();
+
+            while (oThread.IsAlive)
+            {
+                Thread.Sleep(50);
+                Application.DoEvents();
+            }
+
             string[] fileArray = Directory.GetFiles(@"c:\users\Sedi\Documents\repositories\processing-video\data\graphs", "*.svg");
             foreach (String f in fileArray)
             {
