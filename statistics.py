@@ -55,7 +55,7 @@ def draw_graphs(videos):
     values = ['duration', 'bit_rate', 'frame_rate', 'width', 'height', 'size']
     values_with_unit = ['duration [sec]', 'bitRate[Mbit/s]', 'frameRate[fps]', 'width[pixels]', 'height[pixels]',
                         'size[Mb]']
-    data = modify_variables(values)
+    data = modify_variables(values, videos)
     final_chart = pygal.Line(x_label_rotation=270)
     final_chart.title = 'Final Chart'
     final_chart.x_labels = videos
