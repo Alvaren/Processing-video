@@ -77,10 +77,7 @@ namespace Launcher
                 byte[] buffer = new byte[client.ReceiveBufferSize];
                 int bytesRead = nwStream.Read(buffer, 0, client.ReceiveBufferSize);
                 string dataReceived = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Console.WriteLine("Primljeno : " + dataReceived);
-                Console.WriteLine("Dobijena poruka na serveru : " + dataReceived);
                 nwStream.Write(buffer, 0, bytesRead);
-                Console.WriteLine("\n");
                 if (dataReceived == "stop") break;
                 client.Close();
             }

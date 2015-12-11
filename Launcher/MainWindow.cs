@@ -15,7 +15,7 @@ namespace Launcher
         {
             InitializeComponent();
             this.ShowInTaskbar = true;
-            string[] fileArray = Directory.GetFiles(@"c:\users\Sedi\Documents\repositories\processing-video\data\video", "*.avi");
+            string[] fileArray = Directory.GetFiles(@"data\video", "*.avi");
             foreach (String f in fileArray){
                 string filenameWithoutPath = Path.GetFileName(f);
                 comboBox1.Items.Add(filenameWithoutPath);
