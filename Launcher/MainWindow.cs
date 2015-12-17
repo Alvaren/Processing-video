@@ -31,35 +31,56 @@ namespace Launcher
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int x = 0;
-            if (Int32.TryParse(textBox1.Text, out x))
+            int number_of_videos = 0;
+            if (Int32.TryParse(textBox1.Text, out number_of_videos))
             {
-                if (x > 18) x = 18;
-                if (x < 1) x = 1;
+                if (number_of_videos > 18 || number_of_videos < 1)
+                {
+                    ErrorForm error_form = new ErrorForm("'Number of videos' must be between 1 and 18");
+                    error_form.ShowDialog();
+                    return;
+                }
             }
             else
             {
-                x = 1;
+                ErrorForm error_form = new ErrorForm("'Number of videos' must be a number");
+                error_form.ShowDialog();
+                return;
             }
 
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.EnableRaisingEvents = false;
-            proc.StartInfo.FileName = "run.sh";
-            proc.Start();
+            run_shell_script();
+            connect_with_python(number_of_videos);
+            modify_current_frame();
 
+            FinalWindow settingsForm = new FinalWindow();
+            this.Hide();
+            settingsForm.ShowDialog();
+            this.Close();
+        }
+
+        private void connect_with_python(int number_of_videos)
+        {
             send_video_path(comboBox1.SelectedItem.ToString());
-            send_video_path(x.ToString());
+            send_video_path(number_of_videos.ToString());
             send_video_path("stop");
+        }
+
+        private void modify_current_frame()
+        {
             comboBox1.Enabled = false;
             textBox1.Enabled = false;
             button2.Enabled = false;
             label3.Visible = true;
             pictureBox1.Visible = true;
             label4.Visible = true;
-            FinalWindow settingsForm = new FinalWindow();
-            this.Hide();
-            settingsForm.ShowDialog();
-            this.Close();
+        }
+
+        private static void run_shell_script()
+        {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.EnableRaisingEvents = false;
+            proc.StartInfo.FileName = "run.sh";
+            proc.Start();
         }
 
         private void label1_Click(object sender, EventArgs e)

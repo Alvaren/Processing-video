@@ -8,15 +8,21 @@ fgbg_knn = cv2.createBackgroundSubtractorKNN()
 
 
 def background_subtractor_mog2(frame):
-    fgmask = fgbg_mog2.apply(frame)
-    frame = cv2.cvtColor(fgmask, cv2.COLOR_GRAY2RGB)
-    return frame
+    try:
+        fgmask = fgbg_mog2.apply(frame)
+        frame = cv2.cvtColor(fgmask, cv2.COLOR_GRAY2RGB)
+        return frame
+    except:
+        return frame
 
 
 def background_subtractor_knn(frame):
-    fgmask = fgbg_knn.apply(frame)
-    frame = cv2.cvtColor(fgmask, cv2.COLOR_GRAY2RGB)
-    return frame
+    try:
+        fgmask = fgbg_knn.apply(frame)
+        frame = cv2.cvtColor(fgmask, cv2.COLOR_GRAY2RGB)
+        return frame
+    except:
+        return frame
 
 
 def frame_resize(frame, width, height):
