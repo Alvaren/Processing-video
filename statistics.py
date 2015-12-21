@@ -80,17 +80,20 @@ def modify_variables(values, videos):
         tmp = []
         vid = metadata_for('data/video/' + v)
         for c in values:
-            if c == 'duration':
-                seconds = vid.get(c)
-                tmp.append(seconds.total_seconds())
-            elif c == 'bit_rate':
-                bitrate = (vid.get(c) / float(1000000))
-                tmp.append(bitrate)
-            elif c == 'size':
-                size = os.path.getsize('data/video/' + v) / 1000000
-                tmp.append(size)
-            else:
-                tmp.append(vid.get(c))
+            try:
+                if c == 'duration':
+                    seconds = vid.get(c)
+                    tmp.append(seconds.total_seconds())
+                elif c == 'bit_rate':
+                    bitrate = (vid.get(c) / float(1000000))
+                    tmp.append(bitrate)
+                elif c == 'size':
+                    size = os.path.getsize('data/video/' + v) / 1000000
+                    tmp.append(size)
+                else:
+                    tmp.append(vid.get(c))
+            except:
+                tmp.append(0)
         data.append(tmp)
     return data
 

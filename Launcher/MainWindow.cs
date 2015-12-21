@@ -21,7 +21,7 @@ namespace Launcher
                 comboBox1.Items.Add(filenameWithoutPath);
             }
             comboBox1.SelectedIndex = 0;
-            textBox1.Text = "18";
+            textBox1.Text = "0";
         }
 
         private void Form1_Load(object sender, EventArgs e)
